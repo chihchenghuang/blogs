@@ -183,15 +183,12 @@ Ex.
 
   1. 可能需override新增一個定義的primary_key
     有很多的時候db view是不會有primary key的，而如第一段定義所述，declarative class必要一個primary_key，所以這邊必須自己手動新增一個column
-
     [Reference](http://docs.sqlalchemy.org/en/latest/faq/ormconfiguration.html#how-do-i-map-a-table-that-has-no-primary-key)
 
-    
+
   2. 增加extend_existing這個參數
     如果綁定engine的方式不是使用autoload_with=engine的話，也可以在Base.metadata.bind中直接綁定engine，但這種狀況下可能因為你automap declarative class後直接存在Base這個global變數，直接導致除了第一次request可以成功automap，之後的request會直接噴錯，出現如下錯誤：
-
     <h6>sqlalchemy.exc.InvalidRequestError: Table 'search_engine_goods' is already defined for this MetaData instance.  Specify 'extend_existing=True' to redefine options and columns on an existing Table object.</h6>
-    
     這時候只要多加一個 extend_existing=True即可，extend_existing的主要用途就是在允許declarative class可以複寫已經存在的declarative物件（如果程式架構有規劃好可能有機會斃掉這個問題）。
     
 
