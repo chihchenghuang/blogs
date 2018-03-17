@@ -153,10 +153,13 @@ Ex.
   
   其中如果metadata已經bind engine的話，參數中就不用使用autoload_with了！
   在這個範例中如果沒有綁定engine的話會出現如下的問題：
-    <font color="grey">sqlalchemy.exc.UnboundExecutionError: No engine is bound to this Table's MetaData. Pass an engine to the Table via autoload_with=&lt;someengine>, or associate the MetaData with an engine via metadata.bind=&lt;someengine></font>
+    <h6>sqlalchemy.exc.UnboundExecutionError: No engine is bound to this Table's MetaData. Pass an engine to the Table via autoload_with=&lt;someengine>, or associate the MetaData with an engine via metadata.bind=&lt;someengine></h6>
 
   [Error Reference](https://stackoverflow.com/questions/7802981/using-sqlalchemy-declarative-base-and-autoload-true-in-pyramid)
+
+
 2. Table Object → Declarative Class
+
     class MyViewClass(Base):
         __table__ = Table( 'viewname', 
                             metadata, 
