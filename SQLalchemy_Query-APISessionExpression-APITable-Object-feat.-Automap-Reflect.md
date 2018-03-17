@@ -3,7 +3,7 @@ Cheatsheet - [https://www.pythonsheets.com/notes/python-sqlalchemy.html](https:/
 
 
 ----------
-<h2>**Concept**</h2>
+<h2>Concept</h2>
 
 SQLAlchemy提供了三種方式表示資料庫中表的結構：
 1. <font color="blue">Core</font> - Table Object 給 SQLalchemy 的 Expression API 使用
@@ -14,7 +14,7 @@ SQLAlchemy提供了三種方式表示資料庫中表的結構：
 sqlalchemy提供了一種資料庫<font color="blue">自動映射</font>的方式將資料庫的schema映射成sqlalchemy可以使用的object，
 這種概念可以分成兩種層級：Declarative Class、Table Object
 
-<font color="red">**Declarative Class**</font>
+<h2>Declarative Class</h2>
 
 declarative class - 執行session query的基本單位，<font color="blue">**必須有primary key欄位**</font>
 Ex.
@@ -78,7 +78,7 @@ Reference:
 1. [Automap Basic Use](http://docs.sqlalchemy.org/en/latest/orm/extensions/automap.html#basic-use)
 
 
-<font color="red">**Table Object**</font>
+<h2>Table Object</h2>
 
 table object - 執行expression api的基本單位，<font color="blue">**不需**primary key欄位</font>
 Ex.
@@ -119,7 +119,7 @@ Reference:
 2. [Document: Reflect](http://docs.sqlalchemy.org/en/latest/core/metadata.html#sqlalchemy.schema.MetaData.reflect)
 
 
-<font color="red">**Table Object → Declarative Class**</font>
+<h2>Table Object → Declarative Class</h2>
 
 table object 跟 declarative class的關係可以想像成一般型跟進化型的概念，table object經過包裝可以升級成 declarative class，同理也可以從 declarative class 中的property中取得 table object。
 Ex.
@@ -138,7 +138,7 @@ Reference:
 1. [Create a declarative class from table object](http://docs.sqlalchemy.org/en/latest/orm/extensions/declarative/table_config.html#using-a-hybrid-approach-with-table)
 
 
-<font color="red">**Automap/Reflect DB View**</font>
+<h2>Automap/Reflect DB View</h2>
 
 上述的兩種自動映射方式都只有處理一般已經存在db中的table，如果想要針對<font color="blue">db的view也使用automap</font>的話要使用下述的方式進行處理：
 
