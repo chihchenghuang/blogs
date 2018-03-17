@@ -83,6 +83,7 @@ Reference:
 table object - 執行expression api的基本單位，<font color="blue">**不需**primary key欄位</font>
 Ex.
 
+```python
     from sqlalchemy import table, column
     
     user = table("user",
@@ -90,6 +91,7 @@ Ex.
             column("name"),
             column("description"),
     )
+```
 
 Reference:
 
