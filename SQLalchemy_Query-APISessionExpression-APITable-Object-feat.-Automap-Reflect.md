@@ -11,7 +11,7 @@ SQLAlchemy提供了三種方式表示資料庫中表的結構：
 3. <font color="blue">Reflect/Automap</font>: 分別自動映射資料庫表的結構回上面兩種
 
 
-sqlalchemy提供了一種資料庫<font color="blue">自動映射</font>的方式將資料庫的schema映射成sqlalchemy可以使用的object，
+其中，<font color="blue">自動映射</font>的方式可以將資料庫的schema映射成sqlalchemy可以使用的object，
 這種概念可以分成兩種層級：Declarative Class、Table Object
 
 <h2>Declarative Class</h2>
