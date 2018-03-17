@@ -42,7 +42,7 @@ Reference:
     automap_base()、prepare()
 
 Ex.
-
+```python
     from sqlalchemy.ext.automap import automap_base
     from sqlalchemy.orm import Session
     from sqlalchemy import create_engine
@@ -69,6 +69,7 @@ Ex.
     # collection-based relationships are by default named
     # "<classname>_collection"
     print (u1.address_collection)
+```
 
 Reference:
 
