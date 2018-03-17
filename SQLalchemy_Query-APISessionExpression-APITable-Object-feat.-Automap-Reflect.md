@@ -19,6 +19,7 @@ sqlalchemy提供了一種資料庫<font color="blue">自動映射</font>的方�
 declarative class - 執行session query的基本單位，<font color="blue">**必須有primary key欄位**</font>
 Ex.
 
+```python
     from sqlalchemy import Column, Integer, String
     from sqlalchemy.ext.declarative import declarative_base
     
@@ -28,6 +29,7 @@ Ex.
         __tablename__ = 'some_table'
         id = Column(Integer, primary_key=True)
         name =  Column(String(50))
+```
 
 Reference:
 
@@ -101,11 +103,13 @@ Reference:
 
 Ex.
 
+```python
     # Reflecting All Tables at Once
     meta = MetaData()
     meta.reflect(bind=someengine)
     users_table = meta.tables['users']
     addresses_table = meta.tables['addresses']
+```
 
 Reference:
 
@@ -118,11 +122,13 @@ Reference:
 table object 跟 declarative class的關係可以想像成一般型跟進化型的概念，table object經過包裝可以升級成 declarative class，同理也可以從 declarative class 中的property中取得 table object。
 Ex.
 
+```python
     class MyClass(Base):
         __table__ = Table('my_table', Base.metadata,
             Column('id', Integer, primary_key=True),
             Column('name', String(50))
         )
+```
 
 其中 declarative class 中的 __table__ 屬性就是 table object本身。
 Reference:
@@ -147,11 +153,13 @@ Reference:
 [範例](https://stackoverflow.com/questions/20518521/is-possible-to-mapping-view-with-class-using-mapper-in-sqlalchemy)
 Ex.
 
+```python
       view = Table( 'viewname', 
                     metadata,
                     autoload=True, 
                     autoload_with=engine)
-  
+```
+
   其中如果metadata已經bind engine的話，參數中就不用使用autoload_with了！
   在這個範例中如果沒有綁定engine的話會出現如下的問題：
     <h6>sqlalchemy.exc.UnboundExecutionError: No engine is bound to this Table's MetaData. Pass an engine to the Table via autoload_with=&lt;someengine>, or associate the MetaData with an engine via metadata.bind=&lt;someengine></h6>
@@ -161,6 +169,7 @@ Ex.
 
 2. Table Object → Declarative Class
 
+```python
     class MyViewClass(Base):
         __table__ = Table( 'viewname', 
                             metadata, 
@@ -168,6 +177,7 @@ Ex.
                             autoload=True, 
                             autoload_with=engine,
                             extend_existing=True )
+```
 
 這邊主要要注意下面兩點
 
@@ -177,7 +187,7 @@ Ex.
   2. 增加extend_existing這個參數
     如果綁定engine的方式不是使用autoload_with=engine的話，也可以在Base.metadata.bind中直接綁定engine，但這種狀況下可能因為你automap declarative class後直接存在Base這個global變數，直接導致除了第一次request可以成功automap，之後的request會直接噴錯，出現如下錯誤：
     
-    <font color="grey">sqlalchemy.exc.InvalidRequestError: Table 'search_engine_goods' is already defined for this MetaData instance.  Specify 'extend_existing=True' to redefine options and columns on an existing Table object.</font>
+    <h6>sqlalchemy.exc.InvalidRequestError: Table 'search_engine_goods' is already defined for this MetaData instance.  Specify 'extend_existing=True' to redefine options and columns on an existing Table object.</h6>
     
     這時候只要多加一個 extend_existing=True即可，extend_existing的主要用途就是在允許declarative class可以複寫已經存在的declarative物件（如果程式架構有規劃好可能有機會斃掉這個問題）。
     
