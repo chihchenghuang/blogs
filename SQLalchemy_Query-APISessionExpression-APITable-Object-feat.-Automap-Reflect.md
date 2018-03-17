@@ -146,7 +146,7 @@ Reference:
 
 
 基本上<font color="blue">Automap不支援DB View自動映射</font>，所以只能使用table object的方式reflect映射View。
-所以本質上自動映射的View只有支援到table object層級，也就是說只能使用Expression API。但是上面的section也有提到，table object是可以包裝成declarative class的，所以如果能自行包裝成declarative class這樣當然也就能夠使用Session Query API囉！
+所以本質上自動映射的View只有支援到table object層級，只能使用Expression API。但是上面的section也有提到，table object是可以包裝成declarative class的，所以如果能自行包裝成declarative class這樣當然也就能夠使用Session Query API囉！
 
 步驟參考：
 
