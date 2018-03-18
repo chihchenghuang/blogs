@@ -1,4 +1,4 @@
-# [SQLalchemy] Query API(ORM)/Expression API(Core)簡介 feat. Automap, Reflect
+# SQLalchemy - Query API(ORM)、Expression API(Core)自動映射的使用方式 feat. Automap, Reflect
 Cheatsheet - [https://www.pythonsheets.com/notes/python-sqlalchemy.html](https://www.pythonsheets.com/notes/python-sqlalchemy.html)
 
 
@@ -17,6 +17,7 @@ SQLAlchemy提供了三種方式表示資料庫中表的結構：
 <h2>Declarative Class</h2>
 
 declarative class - 執行session query的基本單位，<font color="blue">**必須有primary key欄位**</font>
+
 Ex.
 
 ```python
@@ -80,7 +81,8 @@ Reference:
 
 <h2>Table Object</h2>
 
-table object - 執行expression api的基本單位，<font color="blue">**不需**primary key欄位</font>
+table object - 執行expression api的基本單位，<font color="blue">**非必要**primary key欄位</font>
+
 Ex.
 
 ```python
@@ -121,7 +123,8 @@ Reference:
 
 <h2>Table Object → Declarative Class</h2>
 
-table object 跟 declarative class的關係可以想像成一般型跟進化型的概念，table object經過包裝可以升級成 declarative class，同理也可以從 declarative class 中的property中取得 table object。
+table object 跟 declarative class的關係可以想像成一般型跟進化型的概念，table object經過包裝可以升級成 declarative class，同理也可以從 declarative class 中的property取得 table object。
+
 Ex.
 
 ```python
@@ -133,6 +136,7 @@ Ex.
 ```
 
 其中 declarative class 中的 __table__ 屬性就是 table object本身。
+
 Reference:
 
 1. [Create a declarative class from table object](http://docs.sqlalchemy.org/en/latest/orm/extensions/declarative/table_config.html#using-a-hybrid-approach-with-table)
@@ -145,14 +149,14 @@ Reference:
 概念：
 
 
-基本上<font color="blue">Automap不支援DB View自動映射</font>，所以只能使用table object的方式reflect映射View。
-所以本質上自動映射的View只有支援到table object層級，只能使用Expression API。但是上面的section也有提到，table object是可以包裝成declarative class的，所以如果能自行包裝成declarative class這樣當然也就能夠使用Session Query API囉！
+基本上<font color="blue">Automap不支援DB View自動映射</font>，只能使用table object的方式reflect映射View。
+所以本質上自動映射的View只有支援到table object層級，只能使用Expression API。但是上面的section也有提到，table object是可以被包裝成declarative class的，所以只要想辦法包裝成declarative class這樣就可以使用Session Query API囉！
 
 步驟參考：
 
 1. [Reflect View to table object](http://docs.sqlalchemy.org/en/latest/core/reflection.html#reflecting-views) - 
-
 [範例](https://stackoverflow.com/questions/20518521/is-possible-to-mapping-view-with-class-using-mapper-in-sqlalchemy)
+
 Ex.
 
 ```python
@@ -185,13 +189,13 @@ Ex.
 
   1. 可能需override新增一個定義的primary_key
     有很多的時候db view是不會有primary key的，而如第一段定義所述，declarative class必要一個primary_key，所以這邊必須自己手動新增一個column
-    [Reference](http://docs.sqlalchemy.org/en/latest/faq/ormconfiguration.html#how-do-i-map-a-table-that-has-no-primary-key)
 
+    [Reference](http://docs.sqlalchemy.org/en/latest/faq/ormconfiguration.html#how-do-i-map-a-table-that-has-no-primary-key)
 
   2. 增加extend_existing這個參數
     如果綁定engine的方式不是使用autoload_with=engine的話，也可以在Base.metadata.bind中直接綁定engine，但這種狀況下可能因為你automap declarative class後直接存在Base這個global變數，直接導致除了第一次request可以成功automap，之後的request會直接噴錯，出現如下錯誤：
     <h6>sqlalchemy.exc.InvalidRequestError: Table 'search_engine_goods' is already defined for this MetaData instance.  Specify 'extend_existing=True' to redefine options and columns on an existing Table object.</h6>
-    這時候只要多加一個 extend_existing=True即可，extend_existing的主要用途就是在允許declarative class可以複寫已經存在的declarative物件（如果程式架構有規劃好可能有機會斃掉這個問題）。
+    這時候只要多加一個 extend_existing=True即可，extend_existing的主要用途就是在允許declarative class可以複寫已經存在的declarative物件（如果程式架構有規劃好可能有機會避掉這個問題）。
     
 
 Reference:
